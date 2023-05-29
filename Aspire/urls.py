@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 urlpatterns = [
     path('', include('website_hr.urls'), name='website'),
@@ -29,6 +33,6 @@ urlpatterns = [
      #Linkedin Social Login
     path('social-auth/', include('social_django.urls', namespace='social')),
     
-    path('admin/', admin.site.urls),
+    path(env('SECRET_ADMIN_URL') + '/admin/', admin.site.urls),
    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

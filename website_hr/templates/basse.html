@@ -85,7 +85,8 @@
         <a href="{% url 'home' %}" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="static/website_hr/img/logo.svg" alt=""> -->
-          <h1 class="d-flex align-items-center">MADRIGAL</h1>
+          {% comment %} <h1 class="d-flex align-items-center">MADRIGAL</h1> {% endcomment %}
+          <img src="{% static 'website_hr/img/logo.png' %}" href="{% url 'home' %}" alt="" width="100px" height="300px">
           
         </a>
   
