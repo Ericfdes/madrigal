@@ -1,0 +1,152 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+{% block title %}Register{% endblock title %}
+{% block ifsticky %}sticked{% endblock ifsticky %}
+{% block content %}
+
+<style>
+  #logo{
+    position:absolute;
+left:0;
+top:0;
+width: 300px;
+height: 300px;
+  }
+</style>
+
+    <!-- Content -->
+    <a href="{%url 'home'%}">
+    <img src="{% static 'website_hr/img/logo.svg' %}" id="logo" alt=""></a>
+<!-- Content -->
+
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <!-- Register Card -->
+      <div class="card">
+        <div class="card-body">
+           <!-- Logo -->
+           <div class="app-brand justify-content-center">
+            <a href="{% url 'home' %}" class="app-brand-link gap-2">
+              <!-- <img src="{% static 'website_hr/img/logo.png' %}" alt=""  width="100" height="100"> -->
+            </a>
+          </div>
+          <!-- /Logo -->
+          <h2 class="mb-2" style="font-weight:bold;" >Sign up</h2><br>
+          
+          <form id="formAuthentication" class="mb-3 needs-validation" method="POST" 
+          oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")' novalidate>
+            {% csrf_token %}
+            <div class="mb-3 form-group">
+                <label for='first_name' class="form-label">First Name</label>
+                
+                <input type="text" class="form-control" name="first_name" placeholder='Enter your First Name' required/>
+                <div class="invalid-feedback">
+                  Please enter your First Name.
+                </div>
+            </div>
+            <div class="mb-3 form-group">
+
+              <label for='last_name' class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="last_name" placeholder='Enter your Last Name' required/>
+              <div class="invalid-feedback">
+                Please enter your Last Name.
+              </div>
+          </div>
+
+            <div class="mb-3 form-group">
+              <label for="username" class="form-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter Username.
+              </div>
+            </div>
+        
+            <div class="mb-3 form-group">
+                <label class="form-label" for='email'>Email address</label>
+                
+                <input type="text" class="form-control" name="email" placeholder='Enter your E-mail' required/>
+                <div class="invalid-feedback">
+                  Please enter your E-mail.
+                </div>
+            </div>
+
+            <div class="form-group mb-3 form-password-toggle">
+              <label class="form-label" for="password">Password</label>
+              <div class="input-group input-group-merge">
+                <input
+                  type="password"
+                  id="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="password"
+                  required
+                  
+                />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                <div class="invalid-feedback">
+                  Please enter Password
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3 form-password-toggle">
+              <label class="form-label" for="password">Confirm Password</label>
+              <div class="input-group input-group-merge">
+                <input
+                  type="password"
+                  id="password2"
+                  class="form-control"
+                  name="password2"
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="password2"
+                  required
+                  
+                />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                <div class="invalid-feedback">
+                  Password does not match.
+                </div>
+              </div>
+            </div>
+        
+            <div class="form-group mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" required/>
+                <label class="form-check-label" for="terms-conditions">
+                  I agree to
+                  <a href="{% url 'policy' %}">privacy policy </a>
+                </label>
+             </div>
+            </div>
+        
+            <button class="bton btn-primary d-grid w-100" style="color:white; background-color:blueviolet;" type='submit'>Sign up</button>
+        </form>
+          <p class="text-center">
+            <span>Already have an account?</span>
+            <a href="{% url 'user_login' %}">
+              <span>Sign in instead</span>
+            </a>
+          </p>
+        </div>
+      </div>
+      <!-- Register Card -->
+    </div>
+  </div>
+</div>
+
+
+<!-- / Content -->
+{% endblock content %}
+    
+{% block page_js %}
+
+{% endblock page_js %}

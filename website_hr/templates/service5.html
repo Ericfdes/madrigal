@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - Services</title>{% endblock title %}
+{% load static %}
+{% block content %}
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'website_hr/img/services-header.jpg' %}');">
+      <div class="container position-relative d-flex flex-column align-items-center">
+
+        <h2>Services</h2>
+        <ol>
+          <li><a href={% url 'services' %}>Services</a></li>
+          <li>Career Counselling</li>
+        </ol>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+    <!-- ======= Our Services Section ======= -->
+    <section id="services-list" class="services-list">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Career Counselling</h2>
+
+        </div>
+
+        <div class="row gy-5">
+          
+        
+          <div class="col-lg-12 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon flex-shrink-0"><i class="{{service.logo_icon}}" style="color: {{service.logo_color}};"></i></div> 
+            <div>
+              <h4 class="title"><a href="#" class="stretched-link">{{ service.name }}</a></h4>
+              <p class="description">Our experienced and qualified career counselors work with clients to identify their strengths, interests, and
+                values, and help them to explore various career paths that align with their goals and aspirations. We provide guidance
+                on job search strategies, resume and cover letter writing, interview skills, and networking. Our goal is to help our
+                clients make informed decisions about their career paths, and provide them with the tools and resources needed to
+                succeed in their chosen field. We believe that every individual has the potential to achieve their career aspirations,
+                and we are committed to helping our clients reach their full potential.{{service.description}}</p>
+            </div>
+          </div>
+          <!-- End Service Item -->
+         
+        </div>
+
+      </div>
+    </section><!-- End Our Services Section -->
+
+  
+
+   
+  </main><!-- End #main -->
+
+ {% endblock content %}

@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - Resume</title>{% endblock title %}
+{% load static %}
+{% block ifsticky %}sticked{% endblock ifsticky %}
+{% block content %}
+
+  <main id="main">
+
+    <section id="resumeBuilder" class="resumeBuilder">
+      <div class="container position-relative" data-aos="fade-up">
+
+        <div class="row gy-4 d-flex justify-content-end">
+
+          <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
+            
+            <div class="d-flex">
+              <span class="border">
+                Template:
+                <img src="{% static 'resumebuilder/cv_format.jpg' %}" alt="Resume Format"  style="width:100%;"> 
+         </span>
+            </div><!-- End Info Item -->
+
+        
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
+
+            <!-- HTML5 Inputs -->
+            <form class="ui form needs-validation" action="{% url 'generateResume' %}" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="card mb-4">
+                    <h2 class="card-header text-center" >Build your Resume</h2>
+                    <hr>
+                    <h3 class="card-header">Personal Details</h3>
+                    <div class="card-body">
+                        <!-- Personal Detail Start -->
+                        
+                      <div class="mb-3 row">
+                        <label for="html5-text-input" class="col-md-2 col-form-label">Name:</label>
+                        <div class="col-md-10">
+                          <input class="form-control" type="text" id="html5-text-input" name='name' required/>
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label for="html5-email-input" class="col-md-2 col-form-label">Email:</label>
+                        <div class="col-md-10">
+                          <input class="form-control" type="email" id="html5-email-input" name='email' required/>
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label for="html5-tel-input" class="col-md-2 col-form-label">Phone:</label>
+                        <div class="col-md-10">
+                          <input class="form-control" type="tel" id="html5-tel-input" name='phone_number' required/>
+                        </div>
+                      </div>
+                       <!-- <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-2 col-form-label">Date</label>
+                        <div class="col-md-10">
+                          <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
+                        </div>
+                      </div>  -->
+                      <div class="mb-3 row">
+                        <label for="html5-text-input" class="col-md-2 col-form-label">Address:</label>
+                        <div class="col-md-10">
+                          <input class="form-control" type="text"  id="html5-text-input" name='address' required/>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="formFile" class="form-label">Profile Image:</label>
+                        <input class="form-control" type="file" id="formFile" name="profile_pic" required/>
+                      </div>
+                      <!-- Personal Detail End -->
+                      
+                      <hr>
+                      <h3>Professional Details</h3>
+                      <!-- Professional Detail Start -->
+                      <div class="mb-3 row">
+                        <label for="html5-text-input" class="col-md-2 col-form-label">Job Title:</label>
+                        <div class="col-md-10">
+                          <input class="form-control" type="text" id="html5-text-input" name='position' required/>
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label for="exampleFormControlTextarea1" class="col-md-2 col form-label">Profile Summary:</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Tell us about yourself" name="profile_body" required></textarea>
+                        </div>
+                      </div>
+                      <!-- Work Experience Section -->
+                      <hr>
+                      <h3>Work Experience</h3>
+                    
+                      <div class="col-md-12">
+                        
+                        
+                        {{ work_experience_formset.management_form }}
+                            {% for item in work_experience_formset %}
+                        <div class="form-group row items-group work-exp-form" id='work_experience_group'>
+                            <div class="col-sm-2 mt-2">{{ item.emp_position.label_tag }}</div>
+                            <div class="col-sm-10 mt-2">{{ item.emp_position }}</div>
+
+                            <div class="col-sm-2 mt-2">{{ item.emp_StartMonth.label_tag }}</div>
+                            <div class="col-sm-4 mt-2">{{ item.emp_StartMonth }}</div>
+
+                            <div class="col-sm-2 mt-2">{{ item.emp_StartYear.label_tag }}</div>
+                            <div class="col-sm-4 mt-2">{{ item.emp_StartYear }}</div>
+
+                            <div class="col-sm-2 mt-2">{{ item.emp_EndMonth.label_tag }}</div>
+                            <div class="col-sm-4 mt-2">{{ item.emp_EndMonth }}</div>
+
+                            <div class="col-sm-2 mt-2">{{ item.emp_EndYear.label_tag }}</div>
+                            <div class="col-sm-4 mt-2">{{ item.emp_EndYear }}</div>
+
+                            <div class="col-sm-2 mt-2">{{ item.emp_description.label_tag }}</div>
+                            <div class="col-sm-10 mt-2 mb-3">{{ item.emp_description }}</div>
+                            
+                             
+                            
+                           
+                        </div>
+                        {% endfor %}
+
+                        
+                        
+                        
+                    </div>
+
+                       <!-- Work Experience End -->
+
+
+                    <!-- Education Section -->
+                    <hr>
+                    <h3>Education</h3>
+                  
+                    <div class="col-md-12">
+                      {{ education_formset.management_form }}
+                      
+                      {% for item in education_formset %}
+                      <div class="form-group row items-group education-form" id='education_group'>
+                          <div class="col-sm-2 mb-2">{{ item.school_name.label_tag }}</div>
+                          <div class="col-sm-10 mb-2">{{ item.school_name }}</div>
+
+                          <div class="col-sm-2 mb-2">{{ item.school_location.label_tag }}</div>
+                          <div class="col-sm-10 mb-2">{{ item.school_location }}</div>
+
+                          <div class="col-sm-2 mb-2">{{ item.degree.label_tag }}</div>
+                          <div class="col-sm-10 mb-2">{{ item.degree }}</div>
+
+                          <div class="col-sm-2 mb-2">{{ item.field_of_study.label_tag }}</div>
+                          <div class="col-sm-10 mb-2">{{ item.field_of_study }}</div>
+
+                          <div class="col-sm-2 mb-2">{{ item.startYear.label_tag }}</div>
+                          <div class="col-sm-4 mb-2">{{ item.startYear }}</div>
+
+                          <div class="col-sm-2 mb-2">{{ item.endYear.label_tag }}</div>
+                          <div class="col-sm-4 mb-2 mb-3">{{ item.endYear }}</div>
+
+                      </div>
+                      
+                      {% endfor %}
+                  </div>
+
+                     <!-- Education Section End -->
+
+
+                     <!-- Skills Section -->
+                    <hr>
+                    <h3>Skills</h3>
+                  
+                    <div class="col-md-12">
+                      {{ skills_formset.management_form }}
+                      
+                      {% for item in skills_formset %}
+                      <div class="form-group row items-group skills-form" id='skills_group'>
+                          <div class="col-sm-12 mb-2">{{ item.skillset.label_tag }}</div>
+                          <div class="col-sm-4 mb-2">{{ item.skillset }}</div>
+                          <div class="col-sm-8 mb-2">{{ item.skills }}</div>
+
+                      </div>
+                      
+                      {% endfor %}
+                  </div>
+
+                     <!-- Skills Section End -->
+
+                      
+
+                      <div style="overflow:auto;">
+                        <div style="float:right;">
+                            <!-- <button type="button" id="prevBtn" onclick="nextPrev(-1)"
+                                class='bton btn-warning'>Previous</button> -->
+                            <button type="submit" id="nextBtn"
+                                class='ui inverted violet button'>Submit</button>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+            </form>
+           
+
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+<script>
+  $("#datepicker").datepicker({
+    format: "yyyy",
+    viewMode: "years", 
+    minViewMode: "years"
+});
+
+
+</script>
+
+
+
+  {% endblock content %}
+  
+  {% block page_js %}
+<script>
+$("#work_experience_group").formset(
+    {
+      prefix: '{{ work_experience_formset.prefix }}',
+      addCssClass: 'mb-2',  
+      deleteCssClass: 'mb-2',
+      deleteText: "<div class='ui inverted red button'><i class='bi bi-trash-fill'>&nbsp;Delete Experience</i></div>",
+      addText: "<div class='ui inverted green button'><i class='bi bi-plus'>&nbsp;Add Experience</i></div>",
+      formCssClass: 'work-exp-form',
+    }
+  )
+
+  $("#education_group").formset(
+    {
+      prefix: '{{ education_formset.prefix }}',
+      addCssClass: 'mb-2',  
+      deleteCssClass: 'mb-2',
+      deleteText: "<div class='ui inverted red button'><i class='bi bi-trash-fill'>&nbsp;Delete Education</i></div>",
+      addText: "<div class='ui inverted green button'><i class='bi bi-plus'>&nbsp;Add Education</i></div>",
+      formCssClass: 'education-form',
+    }
+  )
+
+  $("#skills_group").formset(
+    {
+      prefix: '{{ skills_formset.prefix }}',
+      addCssClass: 'mb-2',  
+      deleteCssClass: 'mb-2',
+      deleteText: "<div class='ui inverted red button'><i class='bi bi-trash-fill'>&nbsp;Delete Skillset</i></div>",
+      addText: "<div class='ui inverted green button'><i class='bi bi-plus'>&nbsp;Add Skillset</i></div>",
+      formCssClass: 'skills-form',
+    }
+  )
+
+</script>
+{% endblock page_js %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - Blogs</title>{% endblock title %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url({{blog.banner.url}});">
+      <div class="container position-relative d-flex flex-column align-items-center">
+
+        <h2>{{blog.title}}</h2>
+        <ol class='blog-meta'>
+          <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">&nbsp;{{blog.author}}</a></li>
+          <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">&nbsp;{{blog.created_on|date}}</time></a></li>
+        </ol>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Details Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row g-5 justify-content-center">
+
+          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="200">
+
+            <article class="blog-details">
+
+              <div class="post-img text-center">
+                <img src="{{blog.banner.url}}" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="title">{{blog.title}}</h2>
+
+              <div class="meta-top">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">{{blog.author}}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01">{{blog.created_on|date}}</time></a></li>
+                  
+                </ul>
+              </div><!-- End meta top -->
+
+              <div class="content">
+                {{blog.body|safe}}
+
+              </div><!-- End post content -->
+
+
+            </article><!-- End blog post -->
+
+            <div class="post-author d-flex align-items-center">
+              <img src="{{blog.author.author_pic.url}}" class="rounded-circle flex-shrink-0" alt="">
+              <div>
+                <h4>{{blog.author}}</h4>
+                <div class="social-links">
+                  <a href="{{blog.author.twitter}}"><i class="bi bi-twitter"></i></a>
+                  <a href="{{blog.author.instagram}}"><i class="bi bi-facebook"></i></a>
+                  <a href="{{blog.author.linkedin}}"><i class="biu bi-instagram"></i></a>
+                </div>
+                <p>
+                  {{blog.author.author_desc}}
+                </p>
+              </div>
+            </div><!-- End post author -->
+
+
+          </div>
+
+       
+        </div>
+
+      </div>
+    </section><!-- End Blog Details Section -->
+
+  </main><!-- End #main -->
+
+  
+{% endblock content %}

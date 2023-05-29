@@ -1,0 +1,39 @@
+#logo-admin{
+    height: 40px;
+}
+
+
+#hide {
+    display: none;
+  }
+  
+  #acceptForm {
+    display: none;
+  }
+
+  #rejectForm {
+    display: none;
+  }
+  
+  #acceptTextarea {
+    
+    display: block;
+  }
+
+  #rejectTextarea {
+    
+    display: block;
+  }
+  
+  input {
+    display: block;
+  }
+  
+  @keyframes riseHeight {
+    0% {
+      height: 0px;
+    }
+    100% {
+      height: 200px;
+    }
+  }

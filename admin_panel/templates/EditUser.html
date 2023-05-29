@@ -1,0 +1,136 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %} Admin Panel - Users{% endblock title %}
+{% load has_group %}
+{% block content %}
+
+
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">Edit a User</h4>
+
+      <!-- Basic Layout -->
+      <div class="row">
+        <div class="col-xl">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">User</h5>
+              
+            </div>
+            <div class="card-body">
+              <form method="post" enctype='multipart/form-data' id="formAuthentication" class="mb-3 needs-validation" novalidate>
+                {% csrf_token %}
+                  
+                  <div class="mb-3 form-group">
+                    <label class="form-label">Username</label>
+                    {{userCreateForm.username}}
+                    <div class="invalid-feedback">
+                     Please Enter username
+                    </div>
+                  </div>
+
+                  <div class="mb-3 form-group">
+                    <label for='first_name' class="form-label">First Name</label>
+                    
+                    {{userCreateForm.first_name}}
+                    <div class="invalid-feedback">
+                      Please enter your First Name.
+                    </div>
+                  </div>
+                  <div class="mb-3 form-group">
+      
+                    <label for='last_name' class="form-label">Last Name</label>
+                    {{userCreateForm.last_name}}
+                    <div class="invalid-feedback">
+                      Please enter your Last Name.
+                    </div>
+                  </div>
+
+                  <div class="mb-3 form-group">
+                    <label class="form-label" for='email'>Email address</label>
+                    
+                    {{userCreateForm.email}}
+                    <div class="invalid-feedback">
+                      Please enter your E-mail.
+                    </div>
+                  </div>
+
+                
+
+                    <div class="col-md mb-3">
+                      <small class="text-light fw-semibold">User Permissions</small>
+                      <div class="form-check mt-3">
+                        <div class='row'>
+                          <div class='col-sm-2'>
+                            {{userCreateForm.is_active}}
+                            <label class="form-check-label" for="is_active">
+                            Active Status
+                            </label>
+                          </div>
+                          
+
+                          <div class='col-sm-2'>
+                            <i class='bx bx-info-circle' data-toggle="tooltip" data-placement="right" title="Makes the user a verified user."></i>
+                          </div>
+                      </div>
+                      </div>
+                      <div class="form-check mt-3">
+                        <div class='row'>
+                          <div class='col-sm-2'>
+                            <input class="form-check-input" type="checkbox" name="employee" id="defaultCheck3" {% if user|has_group:"employee" %}checked{% endif %}>
+                            <label class="form-check-label" for="employee">
+                            Candidate Status 
+                            </label>
+                          </div>
+                          
+
+                          <div class='col-sm-2'>
+                            <i class='bx bx-info-circle' data-toggle="tooltip" data-placement="right" title="Give the user basic candidate permissions."></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-check mt-3">
+                        <div class='row'>
+                          <div class='col-sm-2'>
+                            {{userCreateForm.is_staff}}
+                            <label class="form-check-label" for="is_staff">
+                            Staff Status
+                            </label>
+                          </div>
+                          
+
+                          <div class='col-sm-2'>
+                            <i class='bx bx-info-circle' style='color:red;' data-toggle="tooltip" data-placement="right" title="Enable this to allow the user to access the Admin Panel"></i>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                   
+                    <br>
+
+                <button type="submit" class="bton btn-primary">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+
+  
+    <div class="content-backdrop fade"></div>
+  </div>
+  <!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+
+
+{% endblock content%}

@@ -1,0 +1,189 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %} Admin Panel | Job Applications {% endblock title %}
+{% load obj_filter %}
+
+{% block content %}
+
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <!-- Content -->
+        
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="row">
+                    <div class="col-lg-12 mb-4 order-0">
+        
+                        
+                       
+                        <div class="row gutters-sm">
+                        
+                            <div class="col-md-9">
+                              <div class="card mb-3">
+                                <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <h3 class="mb-0">Full Name:</h3>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{applicant.first_name}} {{applicant.last_name}}
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <h3 class="mb-0">Email:</h3>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{applicant.email}}
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <h3 class="mb-0">Phone:</h3>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{applicant.phone_number}}
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  
+                            
+                                  <div class="row justify-content-center">
+                                    <div class="col-sm-6">
+                                      <a href="whatsapp://send?text=Hello !&phone={{applicant.phone_number}}"><button type="button" class="bton bton-success mb-2"><span class="bx bxl-whatsapp"></span>&nbsp;Message on WhatsApp</button></a>
+                                      <button type="button" class="bton btn-primary mb-2"><span class="bx bx-envelope"></span>&nbsp;Email</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              {% if applicant.provider == '1' %}
+                              <div class="card mb-3">
+                                <div class="card-body">
+                                  <div class="row">
+                                    
+                                      <div class="col-sm-3">
+                                        <h3 class="mb-3">Resume</h3>
+                                      </div>
+                                      <hr>
+                                    {% comment %} <embed src="{{ applicant.resume.url }}" width="500" height="375" 
+                                      type="application/pdf"> {% endcomment %}
+
+                                      <iframe src="{{ applicant.resume.url }}" width="100%" height="375" content="text/html" ></iframe>
+                                      
+                                </div>
+                              </div>
+                              {% else %}
+                              <div class="card mb-3">
+                                <div class="card-body">
+                                  <div class="row ">
+                                    
+                                      <div class="col-sm-12 text-center">
+                                        <h6 class="mb-0">This Applicant has applied via<a href='#'>&nbsp;<i class="linkedin icon" style='color:#03B0D4;'></i>LinkedIn</a></h6>
+                                      </div>
+                                    
+                                </div>
+                              </div>
+                              {% endif %}
+                              
+                              </div>
+                             
+                              
+
+                            </div>
+
+                            <div class="col-md-3">  <div class="card mb-3">
+                              <div class="card-body">
+                                <div class="row">
+                                  
+                                    <div class="col-sm-12">
+                                      <h2 class="mb-0">Send Response</h2>
+                                      
+                                      <button  class="ui green button mt-2" id='show-accept-message'><span class="bi bi-check2"></span>&nbsp;Accept</button>
+                                      <button  class="ui red button mt-2" id='show-reject-message'><span class="bi bi-x-lg"></span>&nbsp;Reject</button><i class=''></i>
+
+                                        <form id='acceptForm' class='mt-3' method='POST'>
+                                          {% csrf_token %}
+                                          <label class='form-label' for='acceptTextarea'>Accept Message</label>
+                                          <textarea class='form-control' id='acceptTextarea' name='acceptTextarea'>{{accepttext}}</textarea>
+                                          <input class='ui green button mt-2' type="submit" value="Send Response" name='acceptForm'>
+                                        </form>
+
+                                        <form id='rejectForm' class='mt-3' method='POST'>
+                                          {% csrf_token %}
+                                          <label class='form-label' for='rejectTextarea'>Reject Message</label>
+                                          <textarea class='form-control' id='rejectTextarea' name='rejectTextarea'>{{rejecttext}}</textarea>
+                                          <input class='ui red button mt-2' type="submit" value="Send Response" name='rejectForm'>
+                                        </form>
+
+                                    </div>
+                                  
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- / Card End -->
+        
+                    </div>
+        
+                  
+        
+        
+        
+        
+                </div>
+            </div>
+            <!-- / Content -->
+    <script>
+
+      var show_accept = document.getElementById('show-accept-message');
+      var show_reject = document.getElementById('show-reject-message');
+
+      var hide = document.getElementById('hide');
+
+      var acceptForm = document.getElementById('acceptForm');
+      var rejectForm = document.getElementById('rejectForm');
+
+      var acceptTextarea = document.getElementById('acceptTextarea');
+      var rejectTextarea = document.getElementById('rejectTextarea');
+
+
+      show_accept.addEventListener('click', function(){
+        rejectForm.style = ('display:none');
+
+        acceptForm.style = ('display: block');
+        acceptTextarea.style = ('animation: riseHeight 1s .1s normal forwards');
+        hide.style = ('display: block');
+        show_accept.disabled = true;
+      })
+
+      show_reject.addEventListener('click', function(){
+        acceptForm.style = ('display:none');
+
+        rejectForm.style = ('display: block');
+        rejectTextarea.style = ('animation: riseHeight 1s .1s normal forwards');
+        hide.style = ('display: block');
+        show_accept.disabled = true;
+      })
+
+      hide.addEventListener('click', function() {
+        acceptForm.style = ('display: none');
+        rejectForm.style = ('display: none');
+        hide.style = ('display: none');
+        show_accept.disabled = false;
+      })
+      
+
+    </script> 
+
+{% endblock content %}
+
+
+
+
+    
+  </body>
+</html>

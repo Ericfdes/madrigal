@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - {{job.title}}</title>{% endblock title %}
+{% load static %}
+{% load humanize %}
+{% load has_group %}
+
+
+{% block content %}
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'website_hr/img/blog-header.jpg' %}');">
+      <div class="container position-relative d-flex flex-column align-items-center">
+
+        <h2 class='text-center'>{{job.title}}</h2>
+        <ol class='blog-meta'>
+          <li class="d-flex align-items-center">
+            
+            <div class="job-detail-description" style='color:white;'><i class="bi bi-geo-alt-fill"></i> </i>
+                {{ job.location }} | Posted {{ job.created_at|timesince }} ({{ job.created_at }}) |
+                {% if job.type == '1' %}
+                <span class="badge" style="color:white; background-color:blueviolet;">Full time</span>
+                {% elif job.type == '2' %}
+                <span class="badge" style="color:white; background-color:blueviolet;">Part time</span>
+                {% else %}
+                <span class="badge" style="color:white; background-color:blueviolet;">Internship</span>
+                {% endif %}
+            </div>
+        </li>
+         
+        </ol>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+<section>
+    <div class="container" data-aos="fade-up">
+        <div class="row g-5 justify-content-center">
+            
+            <div class="col-lg-10 card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-body blog-details mt-2 mb-2">
+                <h5><span style="color: black;">Qualifications:</span> {{ job.qualification }}</h5>
+                <h5><span style="color: black;">Experience:</span> {{ job.experience }}</h5>
+                <h5><span style="color: black;">Last date:</span> {{ job.last_date|date }}</h5>
+                <h5 style="color: blueviolet;">Vacancy: {{ job.vacancy }}</h5>
+                <h5>
+                   {% comment %} Salary: {% if job.salary > 0 %} {{ job.salary | intcomma }}/Monthly {% else %}
+                    Negotiable {% endif %} {% endcomment %}
+                </h5>
+
+                <h5><span style="color: black;">Tags:</span></h5>
+                {% for tag in job.tags.all %}
+                
+                <a class="ui purple label">{{ tag.name }}</a>
+                {% endfor %}
+              
+               <hr class='mt-3 mb-3'>
+                <div class="content">
+                    {{ job.description | safe }}
+    
+                  </div><!-- End post content -->
+
+                <div class="job-detail__apply-bottom">
+
+
+                    {% comment %} {% if user.is_authenticated and request.user|has_group:"employee" %}
+                    <div class="job-detail__apply-top">
+                        <input type="submit" class="btn btn-outline-white-primary open-modal-btn"
+                            value="Apply for this job" />
+                    </div>
+                    {% endif %} {% endcomment %}
+
+                    {% if user.is_superuser %}
+                    <div class="job-detail__apply-top">
+                        <input type="button" class="big ui inverted violet button"
+                            value="You're an Admin!" />
+                    </div>
+                    {% else %}
+                    <div class="job-detail__apply-top">
+                        <input type="submit" class="big ui inverted violet button open-modal-btn"
+                            value="Apply for this job" />
+                    </div>
+                    {% endif %}
+                    
+
+                </div>
+                </div>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                {% comment %} <h4>About {{ job.company_name }}</h4> 
+                <p class="job-detail__company-description">{{ job.company_description | safe }}</p>
+                <p class="job-detail__social social social--outline">
+                    <a href="{{job.website}}" data-toggle="tooltip" data-placement="top" title="Website" class="link">
+                        <i class="bi bi-link-45deg"></i>
+                    </a>
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter" class="twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook" class="facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                </p>{% endcomment %}
+
+                
+                {% if user.is_authenticated and user.role == 'employee' %}
+                <div class="job-detail__apply-top">
+                    {% if is_applied %}
+                    <input type="button" class="btn btn-outline-white-primary" value="Already applied" />
+                    {% else %}
+                    <form action="{% url 'jobs:apply-job' job.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="job" value="{{ job.id }}">
+                        <input type="submit" class="btn btn-outline-white-primary" value="Apply for this job" />
+                    </form>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Dialog Box -->
+
+        <dialog id="modal" class="apply-modal col-sm-4 text-center" data-aos="fade-up">
+
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2">
+                    <button type="button" class="btn-close close-modal-btn" aria-label="Close"></button>
+                </div>
+            </div>
+    
+    
+            <form id='job_applyOptionsForm' action="" method="post" enctype="multipart/form-data" class="jobApplyForm">
+                {% csrf_token %}
+                <h4>How would you like to apply?</h4>
+    
+                <div class="apply-options-form">
+    
+
+                        <div id="edit-job-apply-method">
+    
+                            <div class="radio-select form-radio form-item">
+                                <input type="radio" id="edit-job-apply-method-cv" name="job_apply_method" value="cv"
+                                    checked="checked" class="form-radio apply-method valid" aria-invalid="false">
+                                <label for="edit-job-apply-method-cv" class="option">Apply with your CV</label>
+                            </div>
+                            <div class="radio-select form-radio form-item">
+                                <input type="radio" id="edit-job-apply-method-linkedin" name="job_apply_method"
+                                    value="linkedin" class="form-radio apply-method valid" aria-invalid="false">
+                                <label for="edit-job-apply-method-linkedin" class="option">Apply with LinkedIn</label>
+                            </div>
+    
+    
+                        </div>
+
+
+                    
+    
+                    <div style="overflow:auto;">
+                        <div style="float:right;">
+                            <button type="button" id="nextBtn"
+                                class='ui violet button'>Next</button>
+                        </div>
+                    </div>
+    
+                    <!-- Circles which indicates the steps of the form: -->
+                    <div style="text-align:center;margin-top:40px;">
+                        <span class="step"></span>
+                        <span class="step"></span>
+                    </div>
+                </div>
+    
+    
+
+    </form>
+
+
+
+
+    <form id='job_applyCVForm' action="" method="post" enctype="multipart/form-data" class="jobApplyForm needs-validation" novalidate>
+        {% csrf_token %}
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <h5 class="card-header">Apply with CV</h5>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1"
+                                placeholder="name@example.com" name="cv-email" 
+                                value="
+                                {% if request.user.is_authenticated %}
+                                {{request.user.email}}
+                                {% endif %}
+                                " />
+                        </div>
+                        
+                        {% for field in jobApplyForm %}
+                        <div class="mb-3">
+                            <strong style="color: red;">{{ field.errors }}</strong>
+                            <label for="exampleFormControlInput1" class="form-label">{{ field.label_tag }}</label> 
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+                        <input type="hidden" id="applymethodCV" name="applyProviderCV" value="1"> 
+                        
+        
+                    </div>
+                </div>
+            </div>
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" 
+                        class='ui yellow button'>Previous</button>
+                    <button type="submit" name="applyJobCv" 
+                        class='ui violet button'>Submit</button>
+                </div>
+            </div>
+
+            <!-- Circles which indicates the steps of the form: -->
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+    </form>
+
+
+    <form id='job_applyLinkForm' action="" method="post" enctype="multipart/form-data" class="ui form jobApplyForm">
+        {% csrf_token %}
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <h5 class="card-header">Apply with LinkedIn</h5>
+                    <div class="card-body">
+                        
+                        {% if jobApplyLinkForm.initial %}
+                        <h6>Please review the below details we have captured from your LinkedIn</h6>
+                        {% for field in jobApplyLinkForm %}
+                        <div class="mb-3">
+                            <strong style="color: red;">{{ field.errors }}</strong>
+                            <label for="exampleFormControlInput1" class="form-label">{{ field.label_tag }}</label> 
+                            {{ field }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <input type="hidden" id="applymethodLink" name="applyProviderLink" value="2"> 
+                        {% else %}
+                        <a href="{% url 'social:begin' 'linkedin-oauth2' %}?next={{ request.path }}" target="_blank">
+                            <button class="ui inverted violet button" type='button' >
+                                <i class="bi bi-linkedin"></i>
+                                <span>Apply with LinkedIn</span>
+                            </button>
+                        </a>
+                        
+                        {% endif %}
+
+                            
+                        
+        
+                    </div>
+                </div>
+            </div>
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtnOp" 
+                        class='ui yellow button'>Previous</button>
+                    <button type="submit" name="applyJobLink"
+                        class='ui violet button'>Submit</button>
+                </div>
+            </div>
+
+            <!-- Circles which indicates the steps of the form: -->
+          
+    </form>
+
+
+
+    
+    
+    
+    
+    
+    </div>
+    
+    </dialog>
+ 
+        
+
+</section>
+</main><!-- End #main -->
+
+<script>
+    $('#job_applyCVForm').hide();
+    $('#job_applyLinkForm').hide();
+    $('#nextBtn').click(function() {
+        if ($('#edit-job-apply-method-cv').is(':checked')) {
+          $('#job_applyOptionsForm').hide();
+          $('#job_applyCVForm').show();
+        } else if ($('#edit-job-apply-method-linkedin').is(':checked')) {
+            $('#job_applyOptionsForm').hide();
+            $('#job_applyLinkForm').show();
+        }
+      });
+
+
+    $('#prevBtn').click(function() {
+        $(this).closest('form').hide().prev('form').show();
+      });
+
+      $('#prevBtnOp').click(function() {
+        $(this).closest('form').hide();
+        $('#job_applyOptionsForm').show();
+      });
+
+
+
+      {% comment %} $(document).on('submit', '#job_applyLinkForm', function (e) {
+
+          $.ajax({
+            type: 'POST',
+            url: "{% url 'linkApply' job.job_id %}",
+            data: {
+                first_name: $('#first_name').val(),
+                last_name: $('#last_name').val(),
+                email: $('#email').val(),
+                phone_number: $('#id_phone_1').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function (data) {
+                $('#first_name').val('');
+                $('#last_name').val('');
+                $('#email').val('');
+                $('#id_phone_1').val('');
+      
+            }
+        })
+        }); {% endcomment %}
+</script>
+
+{% endblock content %}
+
+{% block page_js %}
+{% comment %} <script src="{% static 'website_hr/js/job_apply.js' %}"></script> {% endcomment %}
+{% endblock page_js %}

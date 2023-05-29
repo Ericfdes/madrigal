@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - Profile</title>{% endblock title %}
+{% load static %}
+{% block ifsticky %}sticked{% endblock ifsticky %}
+
+
+{%block content%}
+<main id="main">
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h2 class="fw-bold py-3 mt-5 mb-2">User Profile</h2>
+
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-pills flex-column flex-md-row mt-3 mb-3">
+          <li class="nav-item">
+            <a class="ui violet button" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="ui violet button " href="{% url 'appliedJobs' %}"
+              ><i class="bx bx-bell me-1"></i> Applied Jobs</a
+            >
+          </li>
+          
+        </ul>
+        <div class="card mb-4">
+          <h3 class="card-header">Profile Details</h3>
+          <!-- Account -->
+          <hr class="my-0" />
+          <div class="card-body">
+            <form id="formAccountSettings" method="POST" onsubmit="return false">
+              <div class="row">
+                
+                <div class="mb-3 col-md-6">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value="{{user.user.first_name}}"
+                    disabled
+                    autofocus
+                  />
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input class="form-control" type="text" name="lastName" id="lastName" value="{{user.user.last_name}}" disabled />
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="firstName" class="form-label">Username</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="username"
+                    name="username"
+                    value="{{user.user.username}}"
+                    disabled
+                    autofocus
+                  />
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="email" class="form-label">E-mail</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="email"
+                    name="email"
+                    value="{{user.user.email}}"
+                    disabled
+                  />
+
+                  
+                </div>
+                
+                <div class="mb-3 col-md-6">
+                  <label class="form-label" for="phoneNumber">Phone Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text">IN (+91)</span>
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      class="form-control"
+                      placeholder="202 555 0111"
+                      value="{{user.phone_number}}"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <!-- Add Socials -->
+                {% comment %} <div class='row'>
+                  <div class='col-md-6'>
+                    <label class="form-label" for="social">Add a Social</label>
+                  </div>
+                </div> {% endcomment %}
+                {% comment %} <div class='row'>
+                  <div class='col-md-6'>
+                    <div class="mb-3 input-group">
+                      <button class="ui inverted violet button dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Select Social
+                      </button>
+                      <ul class="dropdown-menu" style="">
+                        <li><a class="dropdown-item" href="javascript:void(0);">Website</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">Git</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">Linkedin</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">Twitter</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">Instagram</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">Facebook</a></li>
+                      </ul>
+                      <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                    </div>
+                  </div>
+                
+                </div> {% endcomment %}
+                
+                </div>
+                
+
+              {% if user.resume %}
+              <div class="col-sm-12">
+                <label class='form-label'>CV:</label>
+              </div>
+              <div class="col-sm-12 text-center">
+                <iframe src="{{ user.resume.url }}" width="100%" height="375" content="text/html" ></iframe>
+              </div>
+              {% else %}
+              
+              <h5>You have not uploaded CV. Upload your CV by editing your profile</h5>
+              
+              {% endif %}
+              {% comment %} <div class="mb-3">
+                <strong style="color: red;"></strong>
+                <label for="exampleFormControlInput1" class="form-label"><label for="formFile">CV:</label></label> 
+                <input type="file" name="resume" class="form-control" id="formFile" accept=".pdf, .docx, .txt">
+            </div> {% endcomment %}
+            <div class="d-flex flex-row-reverse mt2">
+                <a href='{% url 'profileEdit' user.user.pk %}'>
+                  <button type="button" class="ui button violet">Edit</button>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+  $('.ui.dropdown').dropdown();
+       
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+{% endblock %}

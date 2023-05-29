@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - Jobs</title>{% endblock title %}
+{% load static %}
+{% block ifsticky %}sticked{% endblock ifsticky %}
+
+
+{%block content%}
+
+
+
+
+
+
+<div class="content-wrapper">
+    <!-- Content -->
+  
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h2 class="fw-bold py-3 mt-5 mb-4"><span class="text-muted fw-light">User Profile /</span> Applied Jobs</h2>
+  
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="nav nav-pills flex-column flex-md-row mb-3">
+            <li class="nav-item">
+                <a class="nav-link ui violet button" href="{% url 'profile' %}"
+                  ><i class="bx bx-bell me-1"></i> Account</a
+                >
+              </li>
+
+            <li class="nav-item">
+              <a class="ui violet button nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Applied Jobs</a>
+            </li>
+
+          
+            
+          </ul>
+          <div class='container'>
+            <div class='card-header'>
+                <h1 style='margin: 0;'>Jobs Applied</h1>
+            </div>
+            <hr>
+        {% if jobs %}
+          {% for job in jobs %}
+
+            <div class="card mt-3 mb-5" id="job-card">
+              <div class="card-body row">
+                <div class='col-md-12'>
+                  <div class='card-header'>
+                      <h3 style="font-weight:bold;">{{job.job.title}}</h3><br>
+                      <h5>Applied on: </span><span style="font-weight:bold;">{{job.applied_on}}</h5>
+                  </div>
+              </div>
+
+              
+              <div class='col-md-12 card-header'>
+                  <a href='{% url 'trackJob' job.application_id %}'>
+                      <button class='ui violet button'>Track Job</button>
+                  </a>
+                 
+              </div>
+            </div>
+          </div>
+            
+            {% endfor %}
+        {% else %}
+        <div class='card-header'>
+            You have not applied for any Jobs
+        </div>
+        
+        {% endif %}
+         
+        
+            
+            
+            
+        
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

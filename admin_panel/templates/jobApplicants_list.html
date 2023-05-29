@@ -1,0 +1,139 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %} Admin Panel | Job Applications {% endblock title %}
+{% load obj_filter %}
+
+{% block content %}
+
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content --> 
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <div class="col-lg-12 mb-4 order-0">
+
+            <div class="card mb-5">
+                    <h5 class="card-header">Job Applicants List</h5>
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Applicant</th>
+                            <th>Job</th>
+                            <th>Application Date</th>
+                            <th>Application ID</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                          {% if jobApplications %}
+                          
+                          {% for application in jobApplications  %}
+                            <tr>
+                                <td><a href='{% url "jobApplicantProfile" application.application_id %}'><strong>{{application.first_name}} {{application.last_name}}</strong></a> </td>
+                                <td>{{application.job.title}} </td>
+                                <td>
+                                    {{ application.applied_on|date:"M d, Y" }}
+                                    <!-- <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                      <li
+                                        data-bs-toggle="tooltip"
+                                        data-popup="tooltip-custom"
+                                        data-bs-placement="top"
+                                        class="avatar avatar-xs pull-up"
+                                        title="Lilian Fuller"
+                                      >
+                                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                                      </li>
+                                      <li
+                                        data-bs-toggle="tooltip"
+                                        data-popup="tooltip-custom"
+                                        data-bs-placement="top"
+                                        class="avatar avatar-xs pull-up"
+                                        title="Sophia Wilkerson"
+                                      >
+                                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                                      </li>
+                                      <li
+                                        data-bs-toggle="tooltip"
+                                        data-popup="tooltip-custom"
+                                        data-bs-placement="top"
+                                        class="avatar avatar-xs pull-up"
+                                        title="Christina Parker"
+                                      >
+                                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                                      </li>
+                                    </ul>  -->
+                                  </td>
+    
+                                <td>
+                                    {{application.application_id}}
+                                    
+                                </td>
+                                  <td>
+                                    {% if application.provider == '1' %}
+                                      <span class="badge bg-primary">CV</span>
+                                      {% elif application.provider == '2' %}
+                                      <span class="badge bg-info">LinkedIn</span>
+                                    {% endif %}
+                                   
+                                    <!-- <span class="badge bg-label-success me-1">Completed</span>
+                                    <span class="badge bg-label-info me-1">Scheduled</span> -->
+                                </td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button type="button" class="bton p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                      <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="javascript:void(0);"
+                                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                                      >
+                                      <a class="dropdown-item" href="{% url 'jobApplicationDelete' application.application_id %}" onclick="return confirm('This Job Application will be permanently deleted. Are you sure?')"
+                                        ><i class="bx bx-trash me-1"></i> Delete</a
+                                      >
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            {% endfor %}
+                            {% else %}
+                            <td><h5 class="card-header text-center">There are no Job Applications for this job yet</h5></td>
+                          {% endif %}
+                            
+                            
+    
+    
+    
+                        </tbody>
+                        <tfoot class="table-border-bottom-0">
+                            <tr>
+                              <th>&nbsp;</th>
+                            </tr>
+                          </tfoot>
+                      </table>
+                </div>
+                  </div>
+                  <!-- / Card End -->
+                </div>
+
+                
+
+
+
+
+              </div>
+            </div>
+            <!-- / Content -->
+
+
+{% endblock content %}
+
+
+
+
+    
+  </body>
+</html>

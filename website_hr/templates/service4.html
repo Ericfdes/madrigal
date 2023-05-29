@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - Services</title>{% endblock title %}
+{% load static %}
+{% block content %}
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'website_hr/img/services-header.jpg' %}');">
+      <div class="container position-relative d-flex flex-column align-items-center">
+
+        <h2>Services</h2>
+        <ol>
+          <li><a href={% url 'services' %}>Services</a></li>
+          <li>Salary Survey</li>
+        </ol>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+    <!-- ======= Our Services Section ======= -->
+    <section id="services-list" class="services-list">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Salary Survey</h2>
+
+        </div>
+
+        <div class="row gy-5">
+          
+         
+          <div class="col-lg-12 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon flex-shrink-0"><i class="{{service.logo_icon}}" style="color: {{service.logo_color}};"></i></div> 
+            <div>
+              <h4 class="title"><a href="#" class="stretched-link">{{ service.name }}</a></h4>
+              <p class="description">Our salary survey service helps organizations to stay competitive in the job market by providing accurate and
+                up-to-date information on compensation and benefits packages for various roles and industries. We conduct customized
+                surveys based on our clients' needs and requirements, and collect data from various sources, including industry
+                associations, government agencies, and our extensive network of contacts. We provide comprehensive reports that
+                include data on average salaries, bonuses, and benefits packages, as well as insights and analysis on market trends
+                and best practices. Our salary survey service helps organizations to make informed decisions when it comes to
+                compensation and benefits, and to attract and retain top talent in their respective industries.{{service.description}}</p>
+            </div>
+          </div>
+          <!-- End Service Item -->
+         
+        </div>
+
+      </div>
+    </section><!-- End Our Services Section -->
+
+  
+
+   
+  </main><!-- End #main -->
+
+ {% endblock content %}

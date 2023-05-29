@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}<title>Aspire HR India - Applied Jobs</title>{% endblock title %}
+{% load static %}
+{% block ifsticky %}sticked{% endblock ifsticky %}
+
+
+{%block content%}
+
+
+<div class="content-wrapper">
+    <!-- Content -->
+            <div class='container'>
+                <div class='card mt-5 mb-5'>
+                    <div class='card-body'>
+                        <div class='row'>
+                            <div class='col-lg-6'>
+                                <h5 class='card-header'>
+                                    Job Title: {{ job.job.title }}
+                                </h5>
+                                <h6 class='card-header'>
+                                    Applied on: {{ job.applied_on}}
+                                </h6>
+                                <h6 class='card-header'>
+                                    Appplication ID: {{ job.application_id}}
+                                </h6>
+ 
+                            </div>
+                    
+                        </div>
+                    
+                        <div class="col-lg-12 col-sm-12">
+                            <ol class="progress-tracker mb-5 mt-5">
+                                <li class="trackstep completed"><span class="trackstep-name">Applied</span></li>
+                                <li class="trackstep 
+                    
+                                {% if job.status == '2' %}
+                                active
+                                {% elif job.status > '2' %}
+                                completed
+                                {% endif %}
+                                
+                    
+                                "><span class="trackstep-name">Application Received</span></li>
+                                <li class="trackstep  
+                    
+                                {% if job.status == '3' %}
+                                active
+                                {% elif job.status > '3' %}
+                                completed
+                                {% endif %}
+                                
+                                "><span class="trackstep-name">Review Pending</span></li>
+                                <li class="trackstep 
+                                
+                                {% if job.status == '4' %}
+                                active
+                                {% elif job.status > '4' %}
+                                completed
+                                {% endif %}
+                                
+                                "><span class="trackstep-name">Review Complete</span></li>
+                                <li class="trackstep finaltrackstep 
+                                {% if job.status == '5' %}accept{% endif %} {% if job.status == '6' %}reject{% endif %}">
+                                    <span class="trackstep-name">
+                                        {% if job.status == '5' %}
+                                        Accepted
+                                        {% elif job.status == '6' %}
+                                        Rejected
+                                        {% else %}
+                                        Response Pending
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                
+                              </ol>
+                    
+                        </div>
+                    </div>
+                </div>
+            
+                
+                
+                
+            
+            </div>
+
+  </div>
+
+
+
+{% endblock %}

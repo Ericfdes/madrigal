@@ -1,0 +1,10 @@
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '776yvn0h8kj1wd'
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = 'LZrU3r54kkqMvkNM'
+
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'home'
+SOCIAL_AUTH_LOGIN_URL = 'user_login'
+
+
+aspire_key='77cv0y4orx4d4j'
+aspire_secret_key='HJ2JpvNkqesagEJZ'
