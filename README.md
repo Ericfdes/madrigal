@@ -1,4 +1,4 @@
-![Madrigal](https://github.com/ValiantDoge/madrigal/blob/dev/website_hr/static/img/logo.png?raw=true)
+![Madrigal](https://github.com/ValiantDoge/madrigal/blob/dev/website_hr/static/website_hr/img/logo.png?raw=true)
 # Job Recruitment Web Application
 
 This is a job recruitment web application developed by: 
