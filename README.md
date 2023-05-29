@@ -46,4 +46,4 @@ python manage.py migrate
 5.Access the application by navigating to http://localhost:8000 or http://127.0.0.1:8000/ in your web browser.
 
 
-## Madrigal is deployed on PythonAnywhere. ![Click here to visit!](https://valiantdoge.pythonanywhere.com/) 
+## Madrigal is deployed on PythonAnywhere. [Click here to visit!](https://valiantdoge.pythonanywhere.com/)
