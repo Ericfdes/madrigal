@@ -284,7 +284,7 @@ def profileEdit(request, user_id):
     return render(request, 'profile_edit.html', context)
 
 
-def errorpage(request):
-    return render(request, '404.html')
+def errorpage(request, exception):
+    return render(request, '404.html', status=404)
 
 

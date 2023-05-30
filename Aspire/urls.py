@@ -33,6 +33,8 @@ urlpatterns = [
      #Linkedin Social Login
     path('social-auth/', include('social_django.urls', namespace='social')),
     
-    path(env('SECRET_ADMIN_URL') + '/admin/', admin.site.urls),
+    path(env('SECRET_ADMIN_URL') + 'admin/', admin.site.urls),
    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = "website_hr.views.errorpage"

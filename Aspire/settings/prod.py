@@ -5,7 +5,7 @@ import environ
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # DATABASES = {
 #     'default': {
@@ -17,6 +17,8 @@ ALLOWED_HOSTS = ['*']
 #         'PORT': env('SQL_PORT', default=''),
 #     }
 # }
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 SECURE_SSL_REDIRECT=False
 SESSION_COOKIE_SECURE=False
